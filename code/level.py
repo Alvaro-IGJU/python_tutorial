@@ -1,12 +1,15 @@
 import pygame, sys
-from support import import_csv_layout
+from support import import_csv_layout, import_cut_graphics
 from settings import tile_size
 from tiles import Tile
 class Level: 
     
     def __init__(self,level_data,surface):
+        #general setup
         self.display_surface = surface
         self.world_shift = 0
+
+        #terrain setup
         terrain_layout = import_csv_layout(level_data['terrain'])
         self.terrain_sprites = self.create_tile_group(terrain_layout,'terrain')
 
@@ -20,6 +23,7 @@ class Level:
                     y = row_index * tile_size
                     
                     if type == 'terrain':
+                        terrain_tile_list = import_cut_graphics('graphics/terrain/terrain_tiles.png')
                         sprite  = Tile(tile_size,x,y)
                         sprite_group.add(sprite)
         return sprite_group
